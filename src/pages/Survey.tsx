@@ -8,6 +8,8 @@ const Survey = () => {
     const { questionNumber } = useParams<ParamTypes>();
     return (
         <div>
+            <h1>Survey</h1>
+            <h2>Question {questionNumber}</h2>
             {+questionNumber === 1 ? null : (
                 <Link to={`/survey/${+questionNumber - 1}`}>
                     Previous question
@@ -18,7 +20,6 @@ const Survey = () => {
             ) : (
                 <Link to={`/survey/${+questionNumber + 1}`}>Next question</Link>
             )}
-            Survey {questionNumber}
         </div>
     );
 };
