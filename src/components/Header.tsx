@@ -8,6 +8,7 @@ const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 65px;
 `;
 
 const StyledLink = styled(Link)<{ $filledLink?: boolean }>`
@@ -25,10 +26,10 @@ const Header = () => {
         <StyledHeader>
             <img src={lightLogo} alt='Shiny logo' />
             <nav>
-                <StyledLink to='/'>Home</StyledLink>
-                <StyledLink to='/freelances'>Profiles</StyledLink>
+                <StyledLink to='/'>Accueil</StyledLink>
+                <StyledLink to='/freelances'>Profils</StyledLink>
                 <StyledLink to='/survey/1' $filledLink>
-                    Take the test
+                    Faire le test
                 </StyledLink>
             </nav>
         </StyledHeader>

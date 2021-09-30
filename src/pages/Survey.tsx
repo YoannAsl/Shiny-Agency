@@ -7,20 +7,17 @@ interface ParamTypes {
 const Survey = () => {
     const { questionNumber } = useParams<ParamTypes>();
     return (
-        <div>
-            <h1>Survey</h1>
-            <h2>Question {questionNumber}</h2>
+        <main>
+            <h1>Question {questionNumber}</h1>
             {+questionNumber === 1 ? null : (
-                <Link to={`/survey/${+questionNumber - 1}`}>
-                    Previous question
-                </Link>
+                <Link to={`/survey/${+questionNumber - 1}`}>Précédente</Link>
             )}
             {+questionNumber === 10 ? (
-                <Link to='/results'>Results</Link>
+                <Link to='/results'>Résultat</Link>
             ) : (
-                <Link to={`/survey/${+questionNumber + 1}`}>Next question</Link>
+                <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
             )}
-        </div>
+        </main>
     );
 };
 

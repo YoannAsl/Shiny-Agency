@@ -10,12 +10,12 @@ const freelanceProfiles = [
     },
     {
         name: 'John Doe',
-        jobTitle: 'Frontend Developer',
+        jobTitle: 'Développeur Frontend',
         picture: defaultPicture,
     },
     {
         name: 'Jeanne Biche',
-        jobTitle: 'Fullstack Developer',
+        jobTitle: 'Développeur Fullstack',
         picture: defaultPicture,
     },
 ];
@@ -29,8 +29,11 @@ const CardsContainer = styled.div`
 
 const Freelances = () => {
     return (
-        <div>
-            <h1>Freelances 👩‍💻👨‍💻👩‍💻</h1>
+        <main>
+            <h1>Trouvez votre prestataire</h1>
+            <h2>
+                Chez Shiny, nous réunissons les meilleurs profils pour vous.
+            </h2>
             <CardsContainer>
                 {freelanceProfiles.map((profile, index) => (
                     <Card
@@ -41,7 +44,7 @@ const Freelances = () => {
                     />
                 ))}
             </CardsContainer>
-        </div>
+        </main>
     );
 };
 
