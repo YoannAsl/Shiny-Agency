@@ -8,17 +8,19 @@ const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 65px;
+    margin-bottom: 6.5rem;
 `;
 
 const StyledLink = styled(Link)<{ $filledLink?: boolean }>`
-    padding: 15px;
+    padding: 1.5rem;
     color: ${colors.secondary};
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.8rem;
     ${(props) =>
         props.$filledLink &&
-        `color:white;border-radius:30px;background-color:${colors.primary}`}
+        `color:white;
+        border-radius:3rem;
+        background-color:${colors.primary}`}
 `;
 
 const Header = () => {

@@ -8,22 +8,23 @@ const Main = styled.main`
     display: flex;
     margin: 0 1rem;
     padding: 10rem 5rem;
+    border-radius: 1.5rem;
 `;
 
 const TextContainer = styled.div`
     padding-right: 2rem;
     h1 {
-        font-size: 50px;
-        line-height: 80px;
+        font-size: 5rem;
+        line-height: 8rem;
     }
 `;
 
 const StyledLink = styled(Link)`
-    padding: 15px;
+    padding: 1.5rem;
     text-decoration: none;
     color: white;
-    border-radius: 30px;
-    font-size: 18px;
+    border-radius: 3rem;
+    font-size: 1.8rem;
     background-color: ${colors.primary};
 `;
 
