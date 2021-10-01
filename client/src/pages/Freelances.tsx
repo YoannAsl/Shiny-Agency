@@ -1,5 +1,5 @@
 import defaultPicture from '../assets/profile.png';
-import Card from './../components/Card';
+import Card from '../components/Card';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 
