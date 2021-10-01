@@ -7,30 +7,37 @@ interface CardProps {
     picture: string;
 }
 
-const Label = styled.span`
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: ${colors.backgroundLight};
+    border-radius: 3rem;
+    width: 35rem;
+    transition: 200ms;
+    justify-content: space-between;
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0.2rem 0.2rem 1rem #e2e3e9;
+    }
+`;
+
+const Label = styled.p`
     color: #5843e4;
-    font-size: 22px;
+    font-size: 2.4rem;
     font-weight: bold;
 `;
 
 const Image = styled.img`
-    height: 80px;
-    width: 80px;
+    height: 14.8rem;
+    width: 14.8rem;
     border-radius: 50%;
 `;
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    background-color: ${colors.backgroundLight};
-    border-radius: 30px;
-    width: 350px;
-    transition: 200ms;
-    &:hover {
-        cursor: pointer;
-        box-shadow: 2px 2px 10px #e2e3e9;
-    }
+const Name = styled.p`
+    color: black;
+    font-size: 2.5rem;
 `;
 
 const Card = ({ label, title, picture }: CardProps) => {
@@ -38,7 +45,7 @@ const Card = ({ label, title, picture }: CardProps) => {
         <Wrapper>
             <Label>{label}</Label>
             <Image src={picture} alt='Freelance' />
-            <span>{title}</span>
+            <Name>{title}</Name>
         </Wrapper>
     );
 };

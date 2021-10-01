@@ -13,7 +13,7 @@ import Freelances from './pages/Freelances';
 
 const GlobalStyle = createGlobalStyle`
     * {
-        font-family: 'Trebuchet MS', Helvetica, sans-serif;
+        font-family: 'Comfortaa', cursive,'Trebuchet MS', Helvetica, sans-serif;
         color: #2f2e41;
     }
 

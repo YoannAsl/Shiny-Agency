@@ -1,6 +1,7 @@
 import defaultPicture from '../assets/profile.png';
 import Card from './../components/Card';
 import styled from 'styled-components';
+import colors from '../styles/colors';
 
 const freelanceProfiles = [
     {
@@ -20,16 +21,30 @@ const freelanceProfiles = [
     },
 ];
 
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        font-size: 3rem;
+    }
+    h2 {
+        font-size: 2rem;
+        color: ${colors.secondary};
+    }
+`;
+
 const CardsContainer = styled.div`
     display: grid;
-    gap: 24px;
-    grid-template-rows: 350px 350px;
+    gap: 7rem;
+    grid-template-rows: 35rem;
     grid-template-columns: repeat(2, 1fr);
+    margin-top: 7rem;
 `;
 
 const Freelances = () => {
     return (
-        <main>
+        <Main>
             <h1>Trouvez votre prestataire</h1>
             <h2>
                 Chez Shiny, nous réunissons les meilleurs profils pour vous.
@@ -44,7 +59,7 @@ const Freelances = () => {
                     />
                 ))}
             </CardsContainer>
-        </main>
+        </Main>
     );
 };
 

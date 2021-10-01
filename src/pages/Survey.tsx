@@ -39,6 +39,7 @@ const LinksContainer = styled.div`
     display: flex;
     align-items: center;
     column-gap: 2rem;
+    margin-top: 3rem;
 `;
 
 const StyledLink = styled(Link)`
