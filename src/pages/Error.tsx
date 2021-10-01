@@ -1,8 +1,24 @@
+import image from '../assets/404.svg';
+import styled from 'styled-components';
+import colors from '../styles/colors';
+
+const Main = styled.main`
+    background-color: ${colors.backgroundLight};
+    display: flex;
+    margin: 0 1rem;
+    padding: 10rem;
+    border-radius: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+`;
+
 const Error = () => {
     return (
-        <div>
-            <h1>Oops ! This page doesn't exist.</h1>
-        </div>
+        <Main>
+            <h1>Oups ! Cette page n'existe pas.</h1>
+            <img src={image} alt='404 illustration' />
+        </Main>
     );
 };
 
