@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../styles/colors';
+import { colors } from '../styles';
 
 interface ParamTypes {
     questionNumber: string;
@@ -40,10 +40,9 @@ const LinksContainer = styled.div`
     align-items: center;
     column-gap: 2rem;
     margin-top: 3rem;
-`;
-
-const StyledLink = styled(Link)`
-    font-size: 1.8rem;
+    a {
+        font-size: 1.8rem;
+    }
 `;
 
 const DisabledLink = styled.p`
@@ -67,16 +66,14 @@ const Survey = () => {
                 {+questionNumber === 1 ? (
                     <DisabledLink>Précédente</DisabledLink>
                 ) : (
-                    <StyledLink to={`/survey/${+questionNumber - 1}`}>
+                    <Link to={`/survey/${+questionNumber - 1}`}>
                         Précédente
-                    </StyledLink>
+                    </Link>
                 )}
                 {+questionNumber === 10 ? (
-                    <StyledLink to='/results'>Résultat</StyledLink>
+                    <Link to='/results'>Résultat</Link>
                 ) : (
-                    <StyledLink to={`/survey/${+questionNumber + 1}`}>
-                        Suivante
-                    </StyledLink>
+                    <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
                 )}
             </LinksContainer>
         </Main>

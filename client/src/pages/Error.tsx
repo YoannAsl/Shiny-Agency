@@ -1,6 +1,6 @@
 import image from '../assets/404.svg';
 import styled from 'styled-components';
-import colors from '../styles/colors';
+import { colors } from '../styles';
 
 const Main = styled.main`
     background-color: ${colors.backgroundLight};

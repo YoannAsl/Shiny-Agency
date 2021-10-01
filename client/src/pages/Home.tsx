@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import colors from '../styles/colors';
+import { colors, StyledLink } from '../styles';
 import homeIllustration from '../assets/home-illustration.svg';
-import { Link } from 'react-router-dom';
 
 const Main = styled.main`
     background-color: ${colors.backgroundLight};
@@ -20,15 +19,6 @@ const TextContainer = styled.div`
     }
 `;
 
-const StyledLink = styled(Link)`
-    padding: 1.5rem;
-    text-decoration: none;
-    color: white;
-    border-radius: 3rem;
-    font-size: 1.8rem;
-    background-color: ${colors.primary};
-`;
-
 function Home() {
     return (
         <Main>
@@ -38,7 +28,9 @@ function Home() {
                     <br /> on s’occupe du reste,
                     <br /> avec les meilleurs talents
                 </h1>
-                <StyledLink to='/survey/1'>Faire le test</StyledLink>
+                <StyledLink to='/survey/1' $filledLink>
+                    Faire le test
+                </StyledLink>
             </TextContainer>
             <img src={homeIllustration} alt='illustration' />
         </Main>

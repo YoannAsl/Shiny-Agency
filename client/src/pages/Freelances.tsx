@@ -1,7 +1,7 @@
 import defaultPicture from '../assets/profile.png';
 import Card from '../components/Card';
 import styled from 'styled-components';
-import colors from '../styles/colors';
+import { colors } from '../styles';
 
 const freelanceProfiles = [
     {
