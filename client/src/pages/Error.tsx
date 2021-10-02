@@ -2,6 +2,15 @@ import image from '../assets/404.svg';
 import styled from 'styled-components';
 import { colors } from '../styles';
 
+const Error = () => {
+    return (
+        <Main>
+            <h1>Oups ! Cette page n'existe pas.</h1>
+            <img src={image} alt='404 illustration' />
+        </Main>
+    );
+};
+
 const Main = styled.main`
     background-color: ${colors.backgroundLight};
     display: flex;
@@ -12,14 +21,5 @@ const Main = styled.main`
     align-items: center;
     gap: 3rem;
 `;
-
-const Error = () => {
-    return (
-        <Main>
-            <h1>Oups ! Cette page n'existe pas.</h1>
-            <img src={image} alt='404 illustration' />
-        </Main>
-    );
-};
 
 export default Error;

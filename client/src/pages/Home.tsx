@@ -2,23 +2,6 @@ import styled from 'styled-components';
 import { colors, StyledLink } from '../styles';
 import homeIllustration from '../assets/home-illustration.svg';
 
-const Main = styled.main`
-    background-color: ${colors.backgroundLight};
-    display: flex;
-    justify-content: space-between;
-    margin: 0 1rem;
-    padding: 10rem 5rem;
-    border-radius: 1.5rem;
-`;
-
-const TextContainer = styled.div`
-    h1 {
-        font-size: 5rem;
-        line-height: 9rem;
-        margin-bottom: 8rem;
-    }
-`;
-
 function Home() {
     return (
         <Main>
@@ -36,5 +19,22 @@ function Home() {
         </Main>
     );
 }
+
+const Main = styled.main`
+    background-color: ${colors.backgroundLight};
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem;
+    padding: 10rem 5rem;
+    border-radius: 1.5rem;
+`;
+
+const TextContainer = styled.div`
+    h1 {
+        font-size: 5rem;
+        line-height: 9rem;
+        margin-bottom: 8rem;
+    }
+`;
 
 export default Home;

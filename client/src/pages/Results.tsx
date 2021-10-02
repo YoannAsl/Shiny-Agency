@@ -1,14 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../styles';
 
-const Main = styled.main`
-    background-color: ${colors.backgroundLight};
-    display: flex;
-    margin: 0 1rem;
-    padding: 10rem 5rem;
-    border-radius: 1.5rem;
-`;
-
 const Results = () => {
     return (
         <Main>
@@ -16,5 +8,13 @@ const Results = () => {
         </Main>
     );
 };
+
+const Main = styled.main`
+    background-color: ${colors.backgroundLight};
+    display: flex;
+    margin: 0 1rem;
+    padding: 10rem 5rem;
+    border-radius: 1.5rem;
+`;
 
 export default Results;

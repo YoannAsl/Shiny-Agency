@@ -11,6 +11,42 @@ interface QuestionsType {
     [key: number]: string;
 }
 
+const Survey = () => {
+    const { questionNumber } = useParams<ParamTypes>();
+    const [questions, setQuestions] = useState<QuestionsType>({});
+
+    useEffect(() => {
+        fetch('http://localhost:8000/survey')
+            .then((res) => res.json())
+            .then(({ surveyData }) => setQuestions(surveyData))
+            .catch((error) => console.error(error));
+    }, []);
+
+    return (
+        <Main>
+            <h1>Question {questionNumber}</h1>
+            <Question>{questions[+questionNumber]}</Question>
+            <div>
+                <Button>Oui</Button>
+                <Button>Non</Button>
+            </div>
+            <LinksContainer>
+                {+questionNumber === 1 ? (
+                    <DisabledLink>Précédente</DisabledLink>
+                ) : (
+                    <Link to={`/survey/${+questionNumber - 1}`}>
+                        Précédente
+                    </Link>
+                )}
+                {+questionNumber === 6 ? (
+                    <Link to='/results'>Résultat</Link>
+                ) : (
+                    <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
+                )}
+            </LinksContainer>
+        </Main>
+    );
+};
 const Main = styled.main`
     display: flex;
     flex-direction: column;
@@ -56,42 +92,5 @@ const DisabledLink = styled.p`
     cursor: default;
     color: rgb(192, 202, 207);
 `;
-
-const Survey = () => {
-    const { questionNumber } = useParams<ParamTypes>();
-    const [questions, setQuestions] = useState<QuestionsType>({});
-
-    useEffect(() => {
-        fetch('http://localhost:8000/survey')
-            .then((res) => res.json())
-            .then(({ surveyData }) => setQuestions(surveyData))
-            .catch((error) => console.error(error));
-    }, []);
-
-    return (
-        <Main>
-            <h1>Question {questionNumber}</h1>
-            <Question>{questions[+questionNumber]}</Question>
-            <div>
-                <Button>Oui</Button>
-                <Button>Non</Button>
-            </div>
-            <LinksContainer>
-                {+questionNumber === 1 ? (
-                    <DisabledLink>Précédente</DisabledLink>
-                ) : (
-                    <Link to={`/survey/${+questionNumber - 1}`}>
-                        Précédente
-                    </Link>
-                )}
-                {+questionNumber === 6 ? (
-                    <Link to='/results'>Résultat</Link>
-                ) : (
-                    <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
-                )}
-            </LinksContainer>
-        </Main>
-    );
-};
 
 export default Survey;

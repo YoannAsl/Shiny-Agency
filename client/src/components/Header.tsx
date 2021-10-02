@@ -4,23 +4,6 @@ import lightLogo from '../assets/light-logo.svg';
 import darkLogo from '../assets/dark-logo.svg';
 import { StyledLink } from '../styles';
 
-const StyledHeader = styled.header`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6.5rem;
-    img {
-        height: 7rem;
-    }
-`;
-
-const Nav = styled.nav`
-    padding: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
 const Header = () => {
     return (
         <StyledHeader>
@@ -37,5 +20,22 @@ const Header = () => {
         </StyledHeader>
     );
 };
+
+const StyledHeader = styled.header`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6.5rem;
+    img {
+        height: 7rem;
+    }
+`;
+
+const Nav = styled.nav`
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
 
 export default Header;

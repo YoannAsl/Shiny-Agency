@@ -21,27 +21,6 @@ const freelanceProfiles = [
     },
 ];
 
-const Main = styled.main`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    h1 {
-        font-size: 3rem;
-    }
-    h2 {
-        font-size: 2rem;
-        color: ${colors.secondary};
-    }
-`;
-
-const CardsContainer = styled.div`
-    display: grid;
-    gap: 7rem;
-    grid-template-rows: 35rem;
-    grid-template-columns: repeat(2, 1fr);
-    margin-top: 7rem;
-`;
-
 const Freelances = () => {
     return (
         <Main>
@@ -62,5 +41,26 @@ const Freelances = () => {
         </Main>
     );
 };
+
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        font-size: 3rem;
+    }
+    h2 {
+        font-size: 2rem;
+        color: ${colors.secondary};
+    }
+`;
+
+const CardsContainer = styled.div`
+    display: grid;
+    gap: 7rem;
+    grid-template-rows: 35rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 7rem;
+`;
 
 export default Freelances;

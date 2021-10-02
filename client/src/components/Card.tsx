@@ -7,6 +7,16 @@ interface CardProps {
     picture: string;
 }
 
+const Card = ({ label, title, picture }: CardProps) => {
+    return (
+        <Wrapper>
+            <Label>{label}</Label>
+            <Image src={picture} alt='Freelance' />
+            <Name>{title}</Name>
+        </Wrapper>
+    );
+};
+
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -39,15 +49,4 @@ const Name = styled.p`
     color: black;
     font-size: 2.5rem;
 `;
-
-const Card = ({ label, title, picture }: CardProps) => {
-    return (
-        <Wrapper>
-            <Label>{label}</Label>
-            <Image src={picture} alt='Freelance' />
-            <Name>{title}</Name>
-        </Wrapper>
-    );
-};
-
 export default Card;
