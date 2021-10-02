@@ -1,9 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles';
 
 interface ParamTypes {
     questionNumber: string;
+}
+
+interface QuestionsType {
+    [key: number]: string;
 }
 
 const Main = styled.main`
@@ -54,10 +59,19 @@ const DisabledLink = styled.p`
 
 const Survey = () => {
     const { questionNumber } = useParams<ParamTypes>();
+    const [questions, setQuestions] = useState<QuestionsType>({});
+
+    useEffect(() => {
+        fetch('http://localhost:8000/survey')
+            .then((res) => res.json())
+            .then(({ surveyData }) => setQuestions(surveyData))
+            .catch((error) => console.error(error));
+    }, []);
+
     return (
         <Main>
             <h1>Question {questionNumber}</h1>
-            <Question>question</Question>
+            <Question>{questions[+questionNumber]}</Question>
             <div>
                 <Button>Oui</Button>
                 <Button>Non</Button>
@@ -70,7 +84,7 @@ const Survey = () => {
                         Précédente
                     </Link>
                 )}
-                {+questionNumber === 10 ? (
+                {+questionNumber === 6 ? (
                     <Link to='/results'>Résultat</Link>
                 ) : (
                     <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
