@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { colors } from '../styles';
+import { colors, Loader } from '../styles';
 
 interface ParamTypes {
     questionNumber: string;
@@ -14,18 +14,34 @@ interface QuestionsType {
 const Survey = () => {
     const { questionNumber } = useParams<ParamTypes>();
     const [questions, setQuestions] = useState<QuestionsType>({});
+    const [isDataLoading, setIsDataLoading] = useState(false);
+    const [error, setError] = useState<unknown | null>(null);
 
     useEffect(() => {
-        fetch('http://localhost:8000/survey')
-            .then((res) => res.json())
-            .then(({ surveyData }) => setQuestions(surveyData))
-            .catch((error) => console.error(error));
+        async function getData() {
+            setIsDataLoading(true);
+            try {
+                const res = await fetch('http://localhost:8000/survey');
+                const { surveyData } = await res.json();
+                setQuestions(surveyData);
+            } catch (error) {
+                console.error(error);
+                setError(error);
+            } finally {
+                setIsDataLoading(false);
+            }
+        }
+        getData();
     }, []);
 
     return (
         <Main>
             <h1>Question {questionNumber}</h1>
-            <Question>{questions[+questionNumber]}</Question>
+            {isDataLoading ? (
+                <Loader />
+            ) : (
+                <Question>{questions[+questionNumber]}</Question>
+            )}
             <div>
                 <Button>Oui</Button>
                 <Button>Non</Button>
