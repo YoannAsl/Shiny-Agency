@@ -1,43 +1,78 @@
-import defaultPicture from '../assets/profile.png';
+import { useEffect, useState } from 'react';
+// import defaultPicture from '../assets/profile.png';
 import Card from '../components/Card';
 import styled from 'styled-components';
-import { colors } from '../styles';
+import { colors, Loader } from '../styles';
 
-const freelanceProfiles = [
-    {
-        name: 'Jane Doe',
-        jobTitle: 'DevOps',
-        picture: defaultPicture,
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Développeur Frontend',
-        picture: defaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeur Fullstack',
-        picture: defaultPicture,
-    },
-];
+interface ProfileTypes {
+    id: number;
+    name: string;
+    job: string;
+    picture: string;
+}
+
+// const freelanceProfiles = [
+//     {
+//         name: 'Jane Doe',
+//         jobTitle: 'DevOps',
+//         picture: defaultPicture,
+//     },
+//     {
+//         name: 'John Doe',
+//         jobTitle: 'Développeur Frontend',
+//         picture: defaultPicture,
+//     },
+//     {
+//         name: 'Jeanne Biche',
+//         jobTitle: 'Développeur Fullstack',
+//         picture: defaultPicture,
+//     },
+// ];
 
 const Freelances = () => {
+    const [profiles, setProfiles] = useState<ProfileTypes[]>([]);
+    const [isDataLoading, setIsDataLoading] = useState(false);
+    const [error, setError] = useState<unknown | null>(null);
+
+    useEffect(() => {
+        async function getData() {
+            setIsDataLoading(true);
+            try {
+                const res = await fetch('http://localhost:8000/freelances');
+                const { freelancersList } = await res.json();
+                setProfiles(freelancersList);
+            } catch (error) {
+                console.error(error);
+                setError(error);
+            } finally {
+                setIsDataLoading(false);
+            }
+        }
+        getData();
+    }, []);
+
     return (
         <Main>
             <h1>Trouvez votre prestataire</h1>
             <h2>
                 Chez Shiny, nous réunissons les meilleurs profils pour vous.
             </h2>
-            <CardsContainer>
-                {freelanceProfiles.map((profile, index) => (
-                    <Card
-                        key={index}
-                        label={profile.jobTitle}
-                        picture={profile.picture}
-                        title={profile.name}
-                    />
-                ))}
-            </CardsContainer>
+            {error ? (
+                'Oups, il y a eu un problème.'
+            ) : isDataLoading ? (
+                <Loader />
+            ) : (
+                <CardsContainer>
+                    {profiles.map((profile) => (
+                        <Card
+                            key={profile.id}
+                            label={profile.job}
+                            picture={profile.picture}
+                            title={profile.name}
+                        />
+                    ))}
+                </CardsContainer>
+            )}
         </Main>
     );
 };

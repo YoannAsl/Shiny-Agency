@@ -37,7 +37,9 @@ const Survey = () => {
     return (
         <Main>
             <h1>Question {questionNumber}</h1>
-            {isDataLoading ? (
+            {error ? (
+                'Oups, il y a eu un problème.'
+            ) : isDataLoading ? (
                 <Loader />
             ) : (
                 <Question>{questions[+questionNumber]}</Question>
