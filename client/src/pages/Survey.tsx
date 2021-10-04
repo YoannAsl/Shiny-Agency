@@ -56,7 +56,7 @@ const Survey = () => {
                         Précédente
                     </Link>
                 )}
-                {+questionNumber === 6 ? (
+                {+questionNumber === Object.keys(questions).length ? (
                     <Link to='/results'>Résultat</Link>
                 ) : (
                     <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
