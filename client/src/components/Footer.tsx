@@ -9,7 +9,8 @@ function Footer() {
     return (
         <Container>
             <NightModeButton onClick={themeContext?.toggleTheme}>
-                Changer de mode
+                Changer de mode :{' '}
+                {themeContext?.theme === 'light' ? '☀️' : '🌙'}
             </NightModeButton>
         </Container>
     );
