@@ -2,11 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 import { ThemeContext } from '../context/themeContext';
 import { useContext } from 'react';
 
-const GlobalStyle = () => {
+function GlobalStyle() {
     const theme = useContext(ThemeContext);
 
     return <StyledGlobalStyle $isDarkMode={theme?.theme === 'dark'} />;
-};
+}
 
 const StyledGlobalStyle = createGlobalStyle<{ $isDarkMode: boolean }>`
     * {

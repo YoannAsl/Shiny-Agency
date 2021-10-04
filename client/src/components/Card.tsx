@@ -7,7 +7,7 @@ interface CardProps {
     picture: string;
 }
 
-const Card = ({ label, title, picture }: CardProps) => {
+function Card({ label, title, picture }: CardProps) {
     return (
         <Wrapper>
             <Label>{label}</Label>
@@ -15,7 +15,7 @@ const Card = ({ label, title, picture }: CardProps) => {
             <Name>{title}</Name>
         </Wrapper>
     );
-};
+}
 
 const Wrapper = styled.div`
     display: flex;

@@ -29,7 +29,7 @@ interface ProfileTypes {
 //     },
 // ];
 
-const Freelances = () => {
+function Freelances() {
     const [profiles, setProfiles] = useState<ProfileTypes[]>([]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [error, setError] = useState<unknown | null>(null);
@@ -75,7 +75,7 @@ const Freelances = () => {
             )}
         </Main>
     );
-};
+}
 
 const Main = styled.main`
     display: flex;

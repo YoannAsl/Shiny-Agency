@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { colors } from '../styles';
 
-const Results = () => {
+function Results() {
     return (
         <Main>
             <h1>Les compétences dont vous avez besoin : </h1>
         </Main>
     );
-};
+}
 
 const Main = styled.main`
     background-color: ${colors.backgroundLight};

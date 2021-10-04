@@ -11,7 +11,7 @@ interface QuestionsType {
     [key: number]: string;
 }
 
-const Survey = () => {
+function Survey() {
     const { questionNumber } = useParams<ParamTypes>();
     const [questions, setQuestions] = useState<QuestionsType>({});
     const [isDataLoading, setIsDataLoading] = useState(false);
@@ -64,7 +64,8 @@ const Survey = () => {
             </LinksContainer>
         </Main>
     );
-};
+}
+
 const Main = styled.main`
     display: flex;
     flex-direction: column;

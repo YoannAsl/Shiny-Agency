@@ -3,7 +3,7 @@ import { colors } from '../styles';
 import { useContext } from 'react';
 import { ThemeContext } from './../context/themeContext';
 
-const Footer = () => {
+function Footer() {
     const themeContext = useContext(ThemeContext);
 
     return (
@@ -13,7 +13,7 @@ const Footer = () => {
             </NightModeButton>
         </Container>
     );
-};
+}
 
 const Container = styled.footer`
     display: flex;

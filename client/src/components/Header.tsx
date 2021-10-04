@@ -4,7 +4,7 @@ import lightLogo from '../assets/light-logo.svg';
 import darkLogo from '../assets/dark-logo.svg';
 import { StyledLink } from '../styles';
 
-const Header = () => {
+function Header() {
     return (
         <StyledHeader>
             <Link to='/'>
@@ -19,7 +19,7 @@ const Header = () => {
             </Nav>
         </StyledHeader>
     );
-};
+}
 
 const StyledHeader = styled.header`
     display: flex;
