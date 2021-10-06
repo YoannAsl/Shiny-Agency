@@ -5,7 +5,7 @@ import { ThemeContext } from './../context/themeContext';
 
 function Footer() {
     const themeContext = useContext(ThemeContext);
-
+    console.log(themeContext);
     return (
         <Container>
             <NightModeButton onClick={themeContext?.toggleTheme}>

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
+import { SurveyContext } from './../context/surveyContext';
 
 interface ParamTypes {
     questionNumber: string;
@@ -16,6 +17,9 @@ function Survey() {
     const [questions, setQuestions] = useState<QuestionsType>({});
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [error, setError] = useState<unknown | null>(null);
+    const surveyContext = useContext(SurveyContext);
+
+    console.log(surveyContext);
 
     useEffect(() => {
         async function getData() {
@@ -34,6 +38,10 @@ function Survey() {
         getData();
     }, []);
 
+    function saveAnswer(answer: boolean) {
+        surveyContext?.saveAnswer(questionNumber, answer);
+    }
+
     return (
         <Main>
             <h1>Question {questionNumber}</h1>
@@ -45,8 +53,12 @@ function Survey() {
                 <Question>{questions[+questionNumber]}</Question>
             )}
             <div>
-                <Button>Oui</Button>
-                <Button>Non</Button>
+                <AnswerButton onClick={() => saveAnswer(true)}>
+                    Oui
+                </AnswerButton>
+                <AnswerButton onClick={() => saveAnswer(false)}>
+                    Non
+                </AnswerButton>
             </div>
             <LinksContainer>
                 {+questionNumber === 1 ? (
@@ -81,7 +93,7 @@ const Question = styled.p`
     font-size: 2rem;
 `;
 
-const Button = styled.button`
+const AnswerButton = styled.button`
     background-color: ${colors.backgroundLight};
     padding: 3rem 8rem;
     border-radius: 2rem;
