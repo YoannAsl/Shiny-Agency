@@ -29,7 +29,7 @@ const StyledGlobalStyle = createGlobalStyle<{ $isDarkMode: boolean }>`
     }
 
     button {
-        border:none;
+        border: none;
     }
 `;
 
