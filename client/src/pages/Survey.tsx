@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
 import { SurveyContext } from './../context/surveyContext';
+import { ThemeContext } from './../context/themeContext';
 
 interface ParamTypes {
     questionNumber: string;
@@ -13,13 +14,12 @@ interface QuestionsType {
 }
 
 function Survey() {
+    const surveyContext = useContext(SurveyContext);
+    const themeContext = useContext(ThemeContext);
     const { questionNumber } = useParams<ParamTypes>();
     const [questions, setQuestions] = useState<QuestionsType>({});
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [error, setError] = useState<unknown | null>(null);
-    const surveyContext = useContext(SurveyContext);
-
-    console.log(surveyContext);
 
     useEffect(() => {
         async function getData() {
@@ -44,19 +44,33 @@ function Survey() {
 
     return (
         <Main>
-            <h1>Question {questionNumber}</h1>
+            <Title theme={themeContext!.theme}>Question {questionNumber}</Title>
             {error ? (
                 'Oups, il y a eu un problème.'
             ) : isDataLoading ? (
                 <Loader />
             ) : (
-                <Question>{questions[+questionNumber]}</Question>
+                <Question theme={themeContext!.theme}>
+                    {questions[+questionNumber]}
+                </Question>
             )}
             <div>
-                <AnswerButton onClick={() => saveAnswer(true)}>
+                <AnswerButton
+                    onClick={() => saveAnswer(true)}
+                    isSelected={
+                        surveyContext?.answers[+questionNumber] === true
+                    }
+                    theme={themeContext!.theme}
+                >
                     Oui
                 </AnswerButton>
-                <AnswerButton onClick={() => saveAnswer(false)}>
+                <AnswerButton
+                    onClick={() => saveAnswer(false)}
+                    isSelected={
+                        surveyContext?.answers[+questionNumber] === false
+                    }
+                    theme={themeContext!.theme}
+                >
                     Non
                 </AnswerButton>
             </div>
@@ -64,14 +78,24 @@ function Survey() {
                 {+questionNumber === 1 ? (
                     <DisabledLink>Précédente</DisabledLink>
                 ) : (
-                    <Link to={`/survey/${+questionNumber - 1}`}>
+                    <SurveyLink
+                        theme={themeContext!.theme}
+                        to={`/survey/${+questionNumber - 1}`}
+                    >
                         Précédente
-                    </Link>
+                    </SurveyLink>
                 )}
                 {+questionNumber === Object.keys(questions).length ? (
-                    <Link to='/results'>Résultat</Link>
+                    <SurveyLink theme={themeContext!.theme} to='/results'>
+                        Résultat
+                    </SurveyLink>
                 ) : (
-                    <Link to={`/survey/${+questionNumber + 1}`}>Suivante</Link>
+                    <SurveyLink
+                        theme={themeContext!.theme}
+                        to={`/survey/${+questionNumber + 1}`}
+                    >
+                        Suivante
+                    </SurveyLink>
                 )}
             </LinksContainer>
         </Main>
@@ -88,19 +112,27 @@ const Main = styled.main`
         font-size: 2.5rem;
     }
 `;
+const Title = styled.h1`
+    color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
+`;
 
 const Question = styled.p`
     font-size: 2rem;
+    color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
 `;
 
-const AnswerButton = styled.button`
-    background-color: ${colors.backgroundLight};
+const AnswerButton = styled.button<{ isSelected: boolean; theme: string }>`
+    background-color: ${({ theme }) =>
+        theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
     padding: 3rem 8rem;
     border-radius: 2rem;
     font-size: 2.5rem;
     font-weight: bold;
     margin: 0 2rem;
     border: 0.2rem solid transparent;
+    box-shadow: ${({ isSelected }) =>
+        isSelected ? `0px 0px 0px 2px ${colors.primary} inset` : 'none'};
+    color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
     &:hover {
         border: 0.2rem solid ${colors.primary};
         font-weight: bold;
@@ -115,6 +147,10 @@ const LinksContainer = styled.div`
     a {
         font-size: 1.8rem;
     }
+`;
+
+const SurveyLink = styled(Link)`
+    color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
 `;
 
 const DisabledLink = styled.p`

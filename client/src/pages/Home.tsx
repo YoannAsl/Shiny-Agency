@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { colors, StyledLink } from '../styles';
 import homeIllustration from '../assets/home-illustration.svg';
+import { ThemeContext } from '../context/themeContext';
+import { useContext } from 'react';
 
 function Home() {
+    const themeContext = useContext(ThemeContext);
     return (
-        <Main>
-            <TextContainer>
+        <Main theme={themeContext?.theme}>
+            <TextContainer theme={themeContext?.theme}>
                 <h1>
                     Repérez vos besoins,
                     <br /> on s’occupe du reste,
@@ -21,7 +24,8 @@ function Home() {
 }
 
 const Main = styled.main`
-    background-color: ${colors.backgroundLight};
+    background-color: ${({ theme }) =>
+        theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
     display: flex;
     justify-content: space-between;
     margin: 0 1rem;
@@ -31,6 +35,7 @@ const Main = styled.main`
 
 const TextContainer = styled.div`
     h1 {
+        color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
         font-size: 5rem;
         line-height: 9rem;
         margin-bottom: 8rem;

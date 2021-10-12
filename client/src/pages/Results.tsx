@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
 import { useContext, useEffect, useState } from 'react';
-import { SurveyContext } from './../context/surveyContext';
+import { SurveyContext } from '../context/surveyContext';
+import { ThemeContext } from '../context/themeContext';
 
 interface ResultType {
     title: string;
@@ -14,11 +15,13 @@ function formatFetchParams(answers: { [key: string]: boolean }) {
     return answerNumbers.reduce((previousParams, answerNumber, index) => {
         const isFirstParam = index === 0;
         const separator = isFirstParam ? '' : '&';
+
         return `${previousParams}${separator}a${answerNumber}=${answers[answerNumber]}`;
     }, '');
 }
 
 function Results() {
+    const themeContext = useContext(ThemeContext);
     const surveyContext = useContext(SurveyContext);
     const fetchParams = formatFetchParams(surveyContext!.answers);
     const [data, setData] = useState<ResultType[]>([]);
@@ -43,39 +46,77 @@ function Results() {
         }
         getData();
     }, []);
-    console.log(data);
 
     if (error) return <span>Il y a un problème</span>;
 
     return isDataLoading ? (
         <Loader />
     ) : (
-        <Main>
-            <h1>Les compétences dont vous avez besoin : </h1>
+        <Main theme={themeContext?.theme}>
+            <ResultsTitle theme={themeContext!.theme}>
+                Les compétences dont vous avez besoin :{' '}
+                {data &&
+                    data.map((result, idx) => (
+                        <JobTitle
+                            theme={themeContext!.theme}
+                            key={`result-title-${idx}`}
+                        >
+                            {result.title}
+                            {idx === data.length - 1 ? '' : ', '}
+                        </JobTitle>
+                    ))}
+            </ResultsTitle>
             {data &&
                 data.map((result, idx) => (
-                    <p key={idx}>
-                        {result.title}
-                        {idx === data.length - 1 ? '' : ','}
-                    </p>
-                ))}
-            {data &&
-                data.map((result, idx) => (
-                    <div>
-                        <p key={idx}>{result.title}</p>
-                        <p key={idx}>{result.description}</p>
-                    </div>
+                    <JobDescription
+                        theme={themeContext!.theme}
+                        key={`result-detail-${idx}`}
+                    >
+                        <p>{result.title}</p>
+                        <p>{result.description}</p>
+                    </JobDescription>
                 ))}
         </Main>
     );
 }
 
 const Main = styled.main`
-    background-color: ${colors.backgroundLight};
+    background-color: ${({ theme }) =>
+        theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
     display: flex;
+    flex-direction: column;
     margin: 0 1rem;
     padding: 10rem 5rem;
     border-radius: 1.5rem;
+`;
+
+const ResultsTitle = styled.h1`
+    color: ${({ theme }) => (theme === 'light' ? 'black' : 'white')};
+    font-weight: bold;
+    font-size: 2.8rem;
+    max-width: 60%;
+    text-align: center;
+    & > span {
+        padding-left: 1rem;
+    }
+`;
+
+const JobTitle = styled.span`
+    color: ${({ theme }) =>
+        theme === 'light' ? colors.primary : colors.backgroundLight};
+    text-transform: capitalize;
+`;
+
+const JobDescription = styled.div`
+    font-size: 1.8rem;
+    & > p {
+        color: ${({ theme }) =>
+            theme === 'light' ? colors.secondary : 'white'};
+        margin-block-start: 0.5rem;
+    }
+    & > span {
+        font-size: 2rem;
+    }
 `;
 
 export default Results;

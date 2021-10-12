@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { ThemeContext } from '../context/themeContext';
 import { useContext } from 'react';
+import colors from './colors';
 
 function GlobalStyle() {
     const theme = useContext(ThemeContext);
@@ -25,7 +26,7 @@ const StyledGlobalStyle = createGlobalStyle<{ $isDarkMode: boolean }>`
         max-width: 1440px;
         margin: auto;
         background-color: ${({ $isDarkMode }) =>
-            $isDarkMode ? 'black' : 'white'}
+            $isDarkMode ? colors.dark : 'white'}
     }
 
     button {

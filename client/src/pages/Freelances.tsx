@@ -11,24 +11,6 @@ interface ProfileTypes {
     picture: string;
 }
 
-// const freelanceProfiles = [
-//     {
-//         name: 'Jane Doe',
-//         jobTitle: 'DevOps',
-//         picture: defaultPicture,
-//     },
-//     {
-//         name: 'John Doe',
-//         jobTitle: 'Développeur Frontend',
-//         picture: defaultPicture,
-//     },
-//     {
-//         name: 'Jeanne Biche',
-//         jobTitle: 'Développeur Fullstack',
-//         picture: defaultPicture,
-//     },
-// ];
-
 function Freelances() {
     const [profiles, setProfiles] = useState<ProfileTypes[]>([]);
     const [isDataLoading, setIsDataLoading] = useState(false);
