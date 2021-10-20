@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { SurveyContext } from '../context/surveyContext';
 import { ThemeContext } from '../context/themeContext';
+import { useQuery } from 'react-query';
 
 interface ResultType {
     title: string;
@@ -20,62 +21,45 @@ function formatFetchParams(answers: { [key: string]: boolean }) {
     }, '');
 }
 
+const fetchResults = async (fetchParams: string) => {
+    const res = await fetch(`http://localhost:8000/results?${fetchParams}`);
+    return res.json();
+};
+
 function Results() {
     const themeContext = useContext(ThemeContext);
     const surveyContext = useContext(SurveyContext);
     const fetchParams = formatFetchParams(surveyContext!.answers);
-    const [data, setData] = useState<ResultType[]>([]);
-    const [isDataLoading, setIsDataLoading] = useState(false);
-    const [error, setError] = useState<unknown | null>(null);
 
-    useEffect(() => {
-        async function getData() {
-            setIsDataLoading(true);
-            try {
-                const res = await fetch(
-                    `http://localhost:8000/results?${fetchParams}`
-                );
-                const { resultsData } = await res.json();
-                setData(resultsData);
-            } catch (error) {
-                console.error(error);
-                setError(error);
-            } finally {
-                setIsDataLoading(false);
-            }
-        }
-        getData();
-    }, []);
+    const { data, isLoading, error } = useQuery('results', () =>
+        fetchResults(fetchParams)
+    );
 
     if (error) return <span>Il y a un problème</span>;
-
-    return isDataLoading ? (
-        <Loader />
-    ) : (
+    if (isLoading) return <Loader />;
+    return (
         <Main theme={themeContext?.theme}>
             <ResultsTitle theme={themeContext!.theme}>
                 Les compétences dont vous avez besoin :{' '}
-                {data &&
-                    data.map((result, idx) => (
-                        <JobTitle
-                            theme={themeContext!.theme}
-                            key={`result-title-${idx}`}
-                        >
-                            {result.title}
-                            {idx === data.length - 1 ? '' : ', '}
-                        </JobTitle>
-                    ))}
-            </ResultsTitle>
-            {data &&
-                data.map((result, idx) => (
-                    <JobDescription
+                {data.resultsData.map((result: ResultType, idx: number) => (
+                    <JobTitle
                         theme={themeContext!.theme}
-                        key={`result-detail-${idx}`}
+                        key={`result-title-${idx}`}
                     >
-                        <p>{result.title}</p>
-                        <p>{result.description}</p>
-                    </JobDescription>
+                        {result.title}
+                        {idx === data.length - 1 ? '' : ', '}
+                    </JobTitle>
                 ))}
+            </ResultsTitle>
+            {data.resultsData.map((result: ResultType, idx: number) => (
+                <JobDescription
+                    theme={themeContext!.theme}
+                    key={`result-detail-${idx}`}
+                >
+                    <p>{result.title}</p>
+                    <p>{result.description}</p>
+                </JobDescription>
+            ))}
         </Main>
     );
 }

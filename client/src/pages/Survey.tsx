@@ -1,42 +1,28 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
 import { SurveyContext } from './../context/surveyContext';
 import { ThemeContext } from './../context/themeContext';
+import { useQuery } from 'react-query';
 
 interface ParamTypes {
     questionNumber: string;
 }
 
-interface QuestionsType {
-    [key: number]: string;
-}
+const fetchQuestions = async () => {
+    const res = await fetch('http://localhost:8000/survey');
+    return res.json();
+};
 
 function Survey() {
     const surveyContext = useContext(SurveyContext);
     const themeContext = useContext(ThemeContext);
     const { questionNumber } = useParams<ParamTypes>();
-    const [questions, setQuestions] = useState<QuestionsType>({});
-    const [isDataLoading, setIsDataLoading] = useState(false);
-    const [error, setError] = useState<unknown | null>(null);
-
-    useEffect(() => {
-        async function getData() {
-            setIsDataLoading(true);
-            try {
-                const res = await fetch('http://localhost:8000/survey');
-                const { surveyData } = await res.json();
-                setQuestions(surveyData);
-            } catch (error) {
-                console.error(error);
-                setError(error);
-            } finally {
-                setIsDataLoading(false);
-            }
-        }
-        getData();
-    }, []);
+    const { data, isLoading, isSuccess, error } = useQuery(
+        'questions',
+        fetchQuestions
+    );
 
     function saveAnswer(answer: boolean) {
         surveyContext?.saveAnswer(questionNumber, answer);
@@ -45,59 +31,64 @@ function Survey() {
     return (
         <Main>
             <Title theme={themeContext!.theme}>Question {questionNumber}</Title>
-            {error ? (
-                'Oups, il y a eu un problème.'
-            ) : isDataLoading ? (
-                <Loader />
-            ) : (
-                <Question theme={themeContext!.theme}>
-                    {questions[+questionNumber]}
-                </Question>
+            {error && 'Oups, il y a eu un problème.'}
+            {isLoading && <Loader />}
+            {isSuccess && (
+                <>
+                    <Question theme={themeContext!.theme}>
+                        {data.surveyData[+questionNumber]}
+                    </Question>
+                    <div>
+                        <AnswerButton
+                            onClick={() => saveAnswer(true)}
+                            isSelected={
+                                surveyContext?.answers[+questionNumber] === true
+                            }
+                            theme={themeContext!.theme}
+                        >
+                            Oui
+                        </AnswerButton>
+                        <AnswerButton
+                            onClick={() => saveAnswer(false)}
+                            isSelected={
+                                surveyContext?.answers[+questionNumber] ===
+                                false
+                            }
+                            theme={themeContext!.theme}
+                        >
+                            Non
+                        </AnswerButton>
+                    </div>
+                    <LinksContainer>
+                        {+questionNumber === 1 ? (
+                            <DisabledLink>Précédente</DisabledLink>
+                        ) : (
+                            <SurveyLink
+                                theme={themeContext!.theme}
+                                to={`/survey/${+questionNumber - 1}`}
+                            >
+                                Précédente
+                            </SurveyLink>
+                        )}
+                        {+questionNumber ===
+                        Object.keys(data.surveyData).length ? (
+                            <SurveyLink
+                                theme={themeContext!.theme}
+                                to='/results'
+                            >
+                                Résultat
+                            </SurveyLink>
+                        ) : (
+                            <SurveyLink
+                                theme={themeContext!.theme}
+                                to={`/survey/${+questionNumber + 1}`}
+                            >
+                                Suivante
+                            </SurveyLink>
+                        )}
+                    </LinksContainer>
+                </>
             )}
-            <div>
-                <AnswerButton
-                    onClick={() => saveAnswer(true)}
-                    isSelected={
-                        surveyContext?.answers[+questionNumber] === true
-                    }
-                    theme={themeContext!.theme}
-                >
-                    Oui
-                </AnswerButton>
-                <AnswerButton
-                    onClick={() => saveAnswer(false)}
-                    isSelected={
-                        surveyContext?.answers[+questionNumber] === false
-                    }
-                    theme={themeContext!.theme}
-                >
-                    Non
-                </AnswerButton>
-            </div>
-            <LinksContainer>
-                {+questionNumber === 1 ? (
-                    <DisabledLink>Précédente</DisabledLink>
-                ) : (
-                    <SurveyLink
-                        theme={themeContext!.theme}
-                        to={`/survey/${+questionNumber - 1}`}
-                    >
-                        Précédente
-                    </SurveyLink>
-                )}
-                {+questionNumber === Object.keys(questions).length ? (
-                    <SurveyLink theme={themeContext!.theme} to='/results'>
-                        Résultat
-                    </SurveyLink>
-                ) : (
-                    <SurveyLink
-                        theme={themeContext!.theme}
-                        to={`/survey/${+questionNumber + 1}`}
-                    >
-                        Suivante
-                    </SurveyLink>
-                )}
-            </LinksContainer>
         </Main>
     );
 }

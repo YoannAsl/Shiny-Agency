@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
 // import defaultPicture from '../assets/profile.png';
 import Card from '../components/Card';
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
+import { useQuery } from 'react-query';
 
 interface ProfileTypes {
     id: number;
@@ -11,27 +11,16 @@ interface ProfileTypes {
     picture: string;
 }
 
-function Freelances() {
-    const [profiles, setProfiles] = useState<ProfileTypes[]>([]);
-    const [isDataLoading, setIsDataLoading] = useState(false);
-    const [error, setError] = useState<unknown | null>(null);
+const fetchFreelances = async () => {
+    const res = await fetch('http://localhost:8000/freelances');
+    return res.json();
+};
 
-    useEffect(() => {
-        async function getData() {
-            setIsDataLoading(true);
-            try {
-                const res = await fetch('http://localhost:8000/freelances');
-                const { freelancersList } = await res.json();
-                setProfiles(freelancersList);
-            } catch (error) {
-                console.error(error);
-                setError(error);
-            } finally {
-                setIsDataLoading(false);
-            }
-        }
-        getData();
-    }, []);
+function Freelances() {
+    const { data, isLoading, isSuccess, error } = useQuery(
+        'freelances',
+        fetchFreelances
+    );
 
     return (
         <Main>
@@ -39,13 +28,11 @@ function Freelances() {
             <h2>
                 Chez Shiny, nous réunissons les meilleurs profils pour vous.
             </h2>
-            {error ? (
-                'Oups, il y a eu un problème.'
-            ) : isDataLoading ? (
-                <Loader />
-            ) : (
+            {error && 'Oups, il y a eu un problème.'}
+            {isLoading && <Loader />}
+            {isSuccess && (
                 <CardsContainer>
-                    {profiles.map((profile) => (
+                    {data.freelancersList.map((profile: ProfileTypes) => (
                         <Card
                             key={profile.id}
                             label={profile.job}
