@@ -26,6 +26,14 @@ const fetchResults = async (fetchParams: string) => {
     return res.json();
 };
 
+export function formatJobTitle(
+    title: string,
+    listLength: number,
+    index: number
+) {
+    return index === listLength - 1 ? title : `${title}, `;
+}
+
 function Results() {
     const themeContext = useContext(ThemeContext);
     const surveyContext = useContext(SurveyContext);
@@ -46,8 +54,11 @@ function Results() {
                         theme={themeContext!.theme}
                         key={`result-title-${idx}`}
                     >
-                        {result.title}
-                        {idx === data.length - 1 ? '' : ', '}
+                        {formatJobTitle(
+                            result.title,
+                            data.resultsData.length,
+                            idx
+                        )}
                     </JobTitle>
                 ))}
             </ResultsTitle>
