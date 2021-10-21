@@ -10,7 +10,7 @@ interface ResultType {
     description: string;
 }
 
-function formatFetchParams(answers: { [key: string]: boolean }) {
+export function formatQueryParams(answers: { [key: string]: boolean }) {
     const answerNumbers = Object.keys(answers);
 
     return answerNumbers.reduce((previousParams, answerNumber, index) => {
@@ -21,8 +21,8 @@ function formatFetchParams(answers: { [key: string]: boolean }) {
     }, '');
 }
 
-const fetchResults = async (fetchParams: string) => {
-    const res = await fetch(`http://localhost:8000/results?${fetchParams}`);
+const fetchResults = async (queryParams: string) => {
+    const res = await fetch(`http://localhost:8000/results?${queryParams}`);
     return res.json();
 };
 
@@ -37,10 +37,10 @@ export function formatJobTitle(
 function Results() {
     const themeContext = useContext(ThemeContext);
     const surveyContext = useContext(SurveyContext);
-    const fetchParams = formatFetchParams(surveyContext!.answers);
-
+    const queryParams = formatQueryParams(surveyContext!.answers);
+    console.log(queryParams);
     const { data, isLoading, error } = useQuery('results', () =>
-        fetchResults(fetchParams)
+        fetchResults(queryParams)
     );
 
     if (error) return <span>Il y a un problème</span>;
