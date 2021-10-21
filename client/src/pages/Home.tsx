@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colors, StyledLink } from '../styles';
-import homeIllustration from '../assets/home-illustration.svg';
+import homeIllustration from '../../assets/home-illustration.svg';
 import { ThemeContext } from '../context/themeContext';
 import { useContext } from 'react';
 

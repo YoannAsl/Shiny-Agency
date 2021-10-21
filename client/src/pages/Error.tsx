@@ -1,4 +1,4 @@
-import image from '../assets/404.svg';
+import image from '../../assets/404.svg';
 import styled from 'styled-components';
 import { colors } from '../styles';
 
