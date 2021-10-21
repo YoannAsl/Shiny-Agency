@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import lightLogo from '../../assets/light-logo.svg';
-import darkLogo from '.../../assets/dark-logo.svg';
+import lightLogo from '../assets/light-logo.svg';
+import darkLogo from '../assets/dark-logo.svg';
 import { StyledLink } from '../styles';
 import { useContext } from 'react';
 import { ThemeContext } from '../context/themeContext';
