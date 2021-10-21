@@ -3,6 +3,8 @@ import Card from '../components/Card';
 import styled from 'styled-components';
 import { colors, Loader } from '../styles';
 import { useQuery } from 'react-query';
+import { ThemeContext } from '../context/themeContext';
+import { useContext } from 'react';
 
 interface ProfileTypes {
     id: number;
@@ -17,13 +19,14 @@ const fetchFreelances = async () => {
 };
 
 function Freelances() {
+    const themeContext = useContext(ThemeContext);
     const { data, isLoading, isSuccess, error } = useQuery(
         'freelances',
         fetchFreelances
     );
 
     return (
-        <Main>
+        <Main theme={themeContext?.theme}>
             <h1>Trouvez votre prestataire</h1>
             <h2>
                 Chez Shiny, nous réunissons les meilleurs profils pour vous.
@@ -50,12 +53,14 @@ const Main = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
-    h1 {
+    & > h1 {
         font-size: 3rem;
+        color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
     }
-    h2 {
+    & > h2 {
         font-size: 2rem;
-        color: ${colors.secondary};
+        color: ${({ theme }) =>
+            theme === 'light' ? colors.secondary : 'white'};
     }
 `;
 

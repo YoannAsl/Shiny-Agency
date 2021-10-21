@@ -6,6 +6,7 @@ import { useContext } from 'react';
 
 function Home() {
     const themeContext = useContext(ThemeContext);
+
     return (
         <Main theme={themeContext?.theme}>
             <TextContainer theme={themeContext?.theme}>

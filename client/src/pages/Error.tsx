@@ -1,10 +1,14 @@
 import image from '../assets/404.svg';
 import styled from 'styled-components';
 import { colors } from '../styles';
+import { ThemeContext } from '../context/themeContext';
+import { useContext } from 'react';
 
 function Error() {
+    const themeContext = useContext(ThemeContext);
+
     return (
-        <Main>
+        <Main theme={themeContext?.theme}>
             <h1>Oups ! Cette page n'existe pas.</h1>
             <img src={image} alt='404 illustration' />
         </Main>
@@ -12,7 +16,8 @@ function Error() {
 }
 
 const Main = styled.main`
-    background-color: ${colors.backgroundLight};
+    background-color: ${({ theme }) =>
+        theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
     display: flex;
     margin: 0 1rem;
     padding: 10rem;
@@ -20,6 +25,9 @@ const Main = styled.main`
     flex-direction: column;
     align-items: center;
     gap: 3rem;
+    & > h1 {
+        color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
+    }
 `;
 
 export default Error;
