@@ -37,7 +37,7 @@ function Freelances() {
                             key={profile.id}
                             label={profile.job}
                             picture={profile.picture}
-                            title={profile.name}
+                            name={profile.name}
                         />
                     ))}
                 </CardsContainer>

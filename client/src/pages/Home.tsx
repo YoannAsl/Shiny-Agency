@@ -34,7 +34,7 @@ const Main = styled.main`
 `;
 
 const TextContainer = styled.div`
-    h1 {
+    & > h1 {
         color: ${({ theme }) => (theme === 'light' ? colors.dark : 'white')};
         font-size: 5rem;
         line-height: 9rem;
